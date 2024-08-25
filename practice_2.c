@@ -1,60 +1,101 @@
-#include<stdio.h>
-#include<string.h>
-#define MAX 20
+#include <stdio.h>
+#include <stdlib.h>
+#define max 5
 
-typedef struct Stack{
-    char arr[MAX];
-    int top;
-}stack;
+int lq[max];
+int f = -1;
+int r = -1;
 
-void intialize(stack *st){
-    st->top=-1;
+void display();
+void enque(int item);
+void deque();
+
+int main()
+{
+    int n, ele;
+    printf("\n\tPress\n***********\n1 for enque\n2 for deque\n3 for display\n4 for exit\n**********");
+    do
+    {
+        printf("\nEnter choice:");
+        scanf("%d", &n);
+        switch (n)
+        {
+        case 1:
+            printf("Enter the element to be inserted:");
+            scanf("%d", &ele);
+            enque(ele);
+            break;
+        case 2:
+            deque();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            printf("Exited");
+            break;
+        default:
+            printf("Wrong Input! Please try again");
+            break;
+        }
+    } while (n != 4);
+    return 0;
 }
 
-void push(stack *st, char c){
-    if(st->top==MAX-1){
+void enque(int item)
+{
+    if (r == max - 1)
+    {
         printf("Overflow");
     }
-    else{
-        st->top++;
-        st->arr[st->top]=c;
+    else
+    {
+        if (f == -1 )
+        {
+            f++;
+            r++;
+        }
+        else
+        {
+            r++;
+        }
     }
+    lq[r] = item;
 }
-
-char pop(stack *st){
-    if(st->top==-1){
+void deque()
+{
+    if (f == -1)
+    {
         printf("Underflow");
-        return -1;
     }
-    else{
-        char item = st->arr[st->top];
-        st->top--;
-        return item;
+    else
+    {
+        int temp = lq[f];
+        if (f == r)
+        {
+            f = -1;
+            r = -1;
+        }
+        else
+        {
+            f++;
+        }printf("Item deleted: %d ", temp);
     }
+    
 }
 
-void reverse(char *input){
-    int length = strlen(input);
-    stack st;
-    intialize(&st);
-
-    for(int i=0;i<length;i++){
-        push(&st,input[i]);
+void display()
+{
+    if (f == -1 && r==-1)
+    {
+        printf("Queue is empty.");
     }
-
-    for(int j=0;j<length;j++){
-        input[j]=pop(&st);
+    else
+    {
+        printf("Current queue:");
+        for (int i = f; i <= r; i++)
+        {
+            printf(" %d ", lq[i]);
+        }
     }
-}
-int main(){
-    char input[MAX];
-    printf("Enter the string:");
-    fgets(input,sizeof(input),stdin);
-    input[strcspn(input,"\n")]='\0';
-
-    reverse(input);
-    printf("Reversed String: %s \n",input);
-
-    return 0;
-
 }
