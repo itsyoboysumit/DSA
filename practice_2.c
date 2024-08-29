@@ -1,101 +1,95 @@
-#include <stdio.h>
-#include <stdlib.h>
-#define max 5
+#include<stdio.h>
+#include<stdlib.h>
 
-int lq[max];
-int f = -1;
-int r = -1;
+typedef struct abc{
+    int data;
+    struct abc *next;
+}node;
+node *head,*lastNode;
 
-void display();
-void enque(int item);
-void deque();
+void insertion();
+void insertAfter();
+void insertBefor();
+void searching();
+void trasversing();
+void reversing();
+void deletion();
 
-int main()
-{
-    int n, ele;
-    printf("\n\tPress\n***********\n1 for enque\n2 for deque\n3 for display\n4 for exit\n**********");
-    do
-    {
-        printf("\nEnter choice:");
+int main(){
+    head=NULL,lastNode=NULL;
+    int n;
+    do {
+        printf("\n\tPRESS\n*******************\n1. for Insertion\n2.for insertion after a specific node\n3.for insertion before a specific node\n4. for searching\n5. for transversing\n6. for reversing\n7. for deletion\n8. for exit\n***********************\n");
+        printf("Enter choice:");
         scanf("%d", &n);
         switch (n)
         {
         case 1:
-            printf("Enter the element to be inserted:");
-            scanf("%d", &ele);
-            enque(ele);
+            insertion();
             break;
         case 2:
-            deque();
+            insertAfter(); 
             break;
         case 3:
-            display();
+            insertBefor();
             break;
         case 4:
-            printf("Exited");
+            searching();
+            break;
+        case 5:
+            trasversing();
+            break;
+        case 6:
+            reversing();
+            break;
+        case 7:
+            deletion();
+            break;
+        case 8:
             break;
         default:
-            printf("Wrong Input! Please try again");
             break;
         }
-    } while (n != 4);
+    }while(n<8);
     return 0;
 }
-
-void enque(int item)
-{
-    if (r == max - 1)
-    {
-        printf("Overflow");
-    }
-    else
-    {
-        if (f == -1 )
-        {
-            f++;
-            r++;
-        }
-        else
-        {
-            r++;
-        }
-    }
-    lq[r] = item;
-}
-void deque()
-{
-    if (f == -1)
-    {
-        printf("Underflow");
-    }
-    else
-    {
-        int temp = lq[f];
-        if (f == r)
-        {
-            f = -1;
-            r = -1;
-        }
-        else
-        {
-            f++;
-        }printf("Item deleted: %d ", temp);
+void insertion(){
+    node *temp;
+    temp=(node*)malloc(sizeof(node));
+    printf("Enter the element to be entered:");
+    scanf("%d",temp->data);
+    temp->next=NULL;
+    if(head==NULL){
+        head = temp;
+        lastNode=temp; 
+    }else{
+        lastNode->next=temp;
+        lastNode=temp;
     }
     
 }
-
-void display()
-{
-    if (f == -1 && r==-1)
-    {
-        printf("Queue is empty.");
+void traversing(){
+    node *dh=head;
+    printf("Current list is:");
+    while(dh!==NULL){
+        prinf("[%d]",dh->data);
+        dh=dh->next;
     }
-    else
-    {
-        printf("Current queue:");
-        for (int i = f; i <= r; i++)
-        {
-            printf(" %d ", lq[i]);
-        }
+
+}
+void searching(){
+    int se,flag=0;
+    printf("Enter the element to be searched:");
+    scanf("%d",&se);
+    node *dh=head;
+    while(dh!=NULL){
+        if(se==dh->data){
+            flag=1;
+            break;
+        }dh=dh->next;
+    }if(flag=1){
+        printf("Got it!");
+    }else{
+        printf("Not found.");
     }
 }

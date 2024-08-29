@@ -1,61 +1,75 @@
-#include<stdio.h>
-#include<string.h>
-#define MAX 30
+// link list as stack//
 
-typedef struct Stack
+#include <stdio.h>
+#include <stdlib.h>
+
+void push();
+void pop();
+void display();
+
+typedef struct abc
 {
-    char arr[MAX];
-    int top;
-}stack;
+    int data;
+    struct abc *next;
+} node;
 
-void initialize(stack *st){
-    st->top=-1;
+node *top;
+
+int main()
+{
+    top = NULL;
+    int n;
+    printf("\tPRESS\n******************\n1.for push\n2.for pop\n3.for trasverse\n4.for exit\n******************\n");
+    do
+    {
+        printf("\nEnter choice:");
+        scanf("%d", &n);
+        switch (n)
+        {
+        case 1:
+            push();
+            break;
+        case 2:
+            pop();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            break;
+        default:
+            break;
+        }
+    } while (n < 4);
 }
-
-void push(stack *st, char c){
-    if(st->top==MAX-1){
-        printf("Overflow");
-    }
-    else{
-        st->top++;
-        st->arr[st->top]=c;
-    }
+void push()
+{
+    node *temp = (node *)malloc(sizeof(node));
+    printf("Enter the element to be inserted:");
+    scanf("%d", &temp->data);
+    temp->next = top;
+    top = temp;
 }
-
-char pop(stack *st){
-    if(st->top==-1){
+void pop(){
+    node *temp;
+    if(top==NULL){
         printf("Underflow");
-        return -1;
+    }else{
+        temp=top;
+        top=top->next;
     }
-    else{
-        char item = st->arr[st->top];
-        st->top--;
-        return item;
-    }
+    free(temp);
+    return;
 }
-
-void reverse(char *input){
-    int length = strlen(input);
-    stack st;
-    initialize(&st);
-
-    for(int i=0;i<length;i++){
-        push(&st,input[i]);
+void display(){
+    node *dh=top;
+    if(dh==NULL){
+        printf("Stack is empty.");
+    }else{
+    printf("Current Stack:\n");
+    while(dh!=NULL){
+        printf("[%d]\n",dh->data);
+        dh=dh->next;
     }
-
-    for(int j=0;j<length;j++){
-        input[j]=pop(&st);
     }
-}
-
-int main(){
-    char input[MAX];
-    printf("Enter the string:");
-    fgets(input,sizeof(input),stdin);
-    input[strcspn(input,"\n")]='\0';
-
-    reverse(input);
-    printf("Reversed input: %s \n",input);
-    return 0;
-    
 }
