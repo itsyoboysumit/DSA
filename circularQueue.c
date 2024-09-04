@@ -1,31 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define max 5
+#define max 4
 
 int cq[max];
 int f = max - 1;
 int r = max - 1;
 int flag = 0;
-
-void enque(int item);
+void enque(int ele);
 void deque();
 void display();
 
 int main()
 {
-    int k, item;
+    int n, ele;
+    printf("\tPRESS\n****************\n1 for insertion\n2 for deletion\n3 for display\n4 for exit\n****************");
     do
     {
-
-        printf("\n***********\nPress 1 for enque\nPress 2 for deque\nPress 3 for display\nPress 4 for exit\n************\n");
-        printf("Enter choice:");
-        scanf("%d", &k);
-        switch (k)
+        printf("\nEnter choice:");
+        scanf("%d", &n);
+        switch (n)
         {
         case 1:
-            printf("Enter the element to be queue:");
-            scanf("%d", &item);
-            enque(item);
+            printf("enter the element to be inseted:");
+            scanf("%d", &ele);
+            enque(ele);
             break;
         case 2:
             deque();
@@ -34,40 +32,39 @@ int main()
             display();
             break;
         case 4:
-            printf("Exited.");
+            printf("EXITED");
             break;
         default:
-            printf("Wrong input! Try again.");
+            printf("Wrong Input.Try again");
             break;
         }
-    } while (k != 4);
-    return 0;
+    } while (n != 4);
 }
 
-void enque(int item)
+void enque(int ele)
 {
-    if ((r + 1) % max == f && flag == 1)
+    if ((r + 1) % max == f &&flag == 1)
     {
         printf("Overflow");
     }
     else
     {
         r = (r + 1) % max;
-        cq[r] = item;
+        cq[r] = ele;
         flag = 1;
     }
 }
 void deque()
 {
-    if (f == r && flag == 0)
+    if (f == r &&flag == 0)
     {
         printf("Underflow");
     }
     else
     {
         f = (f + 1) % max;
-        int temp = cq[f];
-        printf("Item deleted:%d", temp);
+        int item = cq[f];
+        printf("Element deleted:%d", item);
         flag = 0;
     }
 }
@@ -75,15 +72,15 @@ void display()
 {
     if (f == r && flag == 0)
     {
-        printf("Empty Queue.");
+        printf("Queue is empty");
     }
     else
     {
-        printf("Current Queue:");
         int i = (f + 1) % max;
-        while(i != (r + 1) % max)
+        printf("current queue is:");
+        while (i != (r + 1) % max)
         {
-            printf(" %d ", cq[i]);
+            printf("[%d] ", cq[i]);
             i = (i + 1) % max;
         }
     }

@@ -1,75 +1,81 @@
-// link list as stack//
+#include<stdio.h>
+#include<stdlib.h>
+#define max 5
 
-#include <stdio.h>
-#include <stdlib.h>
+int cq[max];
+int r=max-1;
+int f=max-1;
+int flag =0;
 
-void push();
-void pop();
+void enque
+(int item);
+void deque();
 void display();
-
-typedef struct abc
-{
-    int data;
-    struct abc *next;
-} node;
-
-node *top;
 
 int main()
 {
-    top = NULL;
-    int n;
-    printf("\tPRESS\n******************\n1.for push\n2.for pop\n3.for trasverse\n4.for exit\n******************\n");
+    int k, item;
     do
     {
-        printf("\nEnter choice:");
-        scanf("%d", &n);
-        switch (n)
+
+        printf("\n***********\nPress 1 for enque\nPress 2 for deque\nPress 3 for display\nPress 4 for exit\n************\n");
+        printf("Enter choice:");
+        scanf("%d", &k);
+        switch (k)
         {
         case 1:
-            push();
+            printf("Enter the element to be queue:");
+            scanf("%d", &item);
+            enque(item);
             break;
         case 2:
-            pop();
+            deque();
             break;
         case 3:
             display();
             break;
         case 4:
+            printf("Exited.");
             break;
         default:
+            printf("Wrong input! Try again.");
             break;
         }
-    } while (n < 4);
+    } while (k != 4);
+    return 0;
 }
-void push()
-{
-    node *temp = (node *)malloc(sizeof(node));
-    printf("Enter the element to be inserted:");
-    scanf("%d", &temp->data);
-    temp->next = top;
-    top = temp;
+
+void enque(int item){
+    if((r+ 1)%max==f && flag==1 ){
+        printf("Overflow");
+    }else{
+        r=(r+1)%max;
+        cq[r]=item;
+        flag=1;
+    }
 }
-void pop(){
-    node *temp;
-    if(top==NULL){
+
+void deque(){
+    if(f==r && flag == 0){
         printf("Underflow");
     }else{
-        temp=top;
-        top=top->next;
+        f=(f+1)%max;
+        int temp = cq[f];
+        printf("Item deleted: %d ", temp);
+        flag=0;
     }
-    free(temp);
-    return;
 }
+
 void display(){
-    node *dh=top;
-    if(dh==NULL){
-        printf("Stack is empty.");
+    if(f==r && flag==0){
+        printf("Queue is empty.");
     }else{
-    printf("Current Stack:\n");
-    while(dh!=NULL){
-        printf("[%d]\n",dh->data);
-        dh=dh->next;
-    }
+        printf("Current queue:");
+        int i = (f+1)%max;
+        while(i!=(r+1)%max){
+            printf(" %d ",cq[i]);
+            i=(i+1)%max;
+        }
+        
     }
 }
